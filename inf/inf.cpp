@@ -22,6 +22,10 @@ std::tuple<double, int, int> CalcMedian(vector<double> &data)
 	{
 		return std::make_tuple(-1, 0, 0);		// error
 	}
+	else if (size == 1)
+	{
+		return std::make_tuple(data[0], 1, 0);
+	}
 	else
 	{
 		sort(data.begin(), data.end());
@@ -40,10 +44,10 @@ std::tuple<double, int, int> CalcMedian(vector<double> &data)
 
 void process(string file)
 {
+	ifstream myfile (file);
 	try 
 	{
 		string line;
-		ifstream myfile (file);
 		if (myfile.is_open())
 		{
 			while (getline(myfile, line) )
@@ -54,14 +58,19 @@ void process(string file)
 				vector <double> tokens; 
 				while(getline(check, t, ' ')) 
 				{
-					double value = stof(t);
-					if((value < -70.0) || (value > 2080000000.0))
-						throw "Value out of range!";
-					tokens.push_back(value); 
+					if(!t.empty())
+					{
+						double value = stof(t);
+						if((value < -70.0) || (value > 2080000000.0))
+						{
+							throw "Value out of range!";
+						}
+						tokens.push_back(value); 
+					}
 				}
 
 				auto median = CalcMedian(tokens);
-				if(std::get<0>(median) < 0)
+				if(std::get<1>(median) == 0)
 				{
 					throw "No data found";
 				}
@@ -83,6 +92,10 @@ void process(string file)
 	} 
 	catch (const char* msg) 
 	{
+		if (myfile.is_open())
+		{
+			myfile.close();
+		}
 		cerr << msg << endl;
 	}
 }
