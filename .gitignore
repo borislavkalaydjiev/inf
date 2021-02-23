@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio
+*.ilk
+*.pdb
+*.idb
+*.opensdf
+*.sdf
+*.suo
+*.tlog
+*.lastbuildstate
+*.log
+*.ipch
