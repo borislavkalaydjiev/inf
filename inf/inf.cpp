@@ -29,7 +29,7 @@ std::tuple<double, int, int> CalcMedian(vector<double> &data)
 	else
 	{
 		sort(data.begin(), data.end());
-		if (size % 1 == 0)
+		if (size % 2 == 0)
 		{
 			double median = (data[size / 2 - 1] + data[size / 2]) / 2.0;
 			return std::make_tuple(median, (size / 2 - 1), (size / 2));
